@@ -1,0 +1,38 @@
+.elCard {
+    width: 200px;
+  
+    .imgWrap {
+      width: 160px;
+      height: 160px;
+      overflow: hidden;
+      cursor: pointer;
+  
+      .image {
+        width: 100%;
+      }
+    }
+    
+    .text {
+      display: flex;
+      justify-content: space-between;
+  
+      .titleWrap {
+        width: 60%;
+  
+        p {
+          width: 100%;
+          text-overflow:ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+        }
+      }
+  
+      .btnWrap {
+        width: 40%;
+        text-align: center;
+        color: #409EFF;
+        cursor: pointer;
+      }
+    }
+    
+  }

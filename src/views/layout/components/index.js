@@ -1,0 +1,6 @@
+export { default as AppSidebar } from './side'
+export { default as AppHeader } from './header'
+export { default as AppFooter } from './footer'
+export { default as AppMain } from './main'
+export { default as AppMainLeft } from './main-left'
+export { default as AppMainRight } from './main-right'

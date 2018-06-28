@@ -1,0 +1,23 @@
+.search-wrap {
+  width: 100%;
+}
+
+.data-list {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  margin: 20px;
+  padding: 30px 15px;
+  &-footer {
+    text-align: right;
+  }
+  &-row {
+    margin: 0 0 20px 0;
+    .el-input {
+      width: 70%;
+    }
+  }
+  .table-main {
+    width: 100%;
+  }
+}

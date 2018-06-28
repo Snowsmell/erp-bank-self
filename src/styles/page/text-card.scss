@@ -1,0 +1,75 @@
+@import '../comm/var';
+
+.text-card{
+  background-color: #fff;
+
+  &-hd{
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+
+    &.is-border{
+      border-bottom: 1px solid #ebeef5;
+    }
+
+    .left{
+      flex: 1;
+      
+      .title{
+        font-size: 16px;
+        color: $text1-color;
+      }
+      .sub-title{
+        margin-left: 12px;
+        color: $text3-color;
+      }
+    }
+  }
+  &-bd{
+    padding: 20px;
+    .el-col{
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+    .term{
+      display: table-cell;
+      white-space: nowrap;
+    }
+    .detail{
+      display: table-cell;
+      padding-left: 8px;
+      color: $text3-color;
+      text-align: justify;
+    }
+    .title{
+      color:#333;
+      font-size: 18px;
+      
+      span{
+        margin-left: 15px;
+        color:#8E8E93;
+      }
+    }
+  }
+  &-ft{
+    padding: 12px 20px;
+    
+    &.is-border{
+      border-top: 1px solid #ebeef5;
+    }
+  }
+  &.tablerow{
+    margin-bottom: 20px;
+    .text-card-bd{
+      padding: 0;
+    }
+    .el-row{
+      padding: 0 20px;
+      box-sizing: border-box;
+      margin: 0 !important;
+      &:nth-of-type(2n){
+        background-color: #F9F9F9;
+      }
+    }
+  }
+}

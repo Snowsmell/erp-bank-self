@@ -1,0 +1,237 @@
+@import '../comm/var';
+
+%page {
+  box-sizing: border-box;
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+  border: 1px solid #E4E7ED;
+  border-radius: 4px;
+}
+%disabled{
+  color: $disabled-text-color;
+  background-color: $disabled-bg-color;
+  cursor: not-allowed;
+}
+
+.app-aside{
+  width: 256px;
+  background-color: #181935;
+
+  &-logo{
+    height: 64px;
+    font-size: 16px; color: #fff;
+    line-height: 64px; text-align: left;
+    padding-left: 12px;
+    background-color: #121245;
+  }
+  &-avatar {
+    display: inline-block;
+    width:34px;
+    height: auto;
+    margin-right: 15px;
+    position: relative;
+    top: 8px;
+  }
+  .app-sidemenu.el-menu{
+    border-right: none;
+  }
+}
+
+.app-header{
+  position: relative; z-index: 10;
+  background-color: #121245;
+  box-shadow: 0 1px 4px rgba(0,21,41,.08);
+
+  &-right{
+    float: right;
+    width: 10%;min-width: 134px;
+    height: 64px;line-height: 64px;
+    text-align: right;
+  }
+  &-left {
+    float: left;
+    width: 60%;
+    // padding-left: 10%;
+    height: 64px;
+    line-height: 64px;
+    text-align: center;
+    overflow: hidden;
+    
+    .amount {
+      display: inline-block;
+      padding: 0 15px;
+      color: #fff;
+    }
+    .title {
+      font-size: 14px;
+    }
+    .month-amount {
+      border-right: 1px solid #000032;
+    }
+    .sub-amount {
+      font-size: 20px;
+      margin-left: 20px;
+    }
+  }
+
+  .name {
+    color: #fff;
+  }
+  .app-side-handle{
+    margin-right: 24px;
+    font-size: 20px;
+    line-height: 64px;
+  }
+  .app-breadcrumb{
+    display: inline-block;
+  }
+}
+
+.app-main{
+  overflow: auto;
+  position: relative;
+  height: 100%;
+  &.is-full{
+    overflow: hidden;
+    padding: 0;
+  }
+
+  &-left{
+    display: flex;
+    display: none;
+    flex-direction: column;
+    position: absolute; top: 0; bottom: 0; left: 0;
+    box-sizing: border-box;
+    width: 280px; height: 100%;
+    padding-top: 12px;
+    background-color: #fff;
+
+    .side-search{
+      box-sizing: border-box;
+      padding: 8px 12px;
+    }
+    .side-filter{
+      padding: 8px 12px;
+      h3{
+        margin: 0 0 6px;
+      }
+      .el-checkbox, .el-radio{
+        width: 124px;
+        margin: 0 0 8px 0;
+      }
+    }
+    .side-page{
+      display: flex;
+      padding: 12px;
+      box-shadow: 0 -2px 6px rgba(0, 0, 0, .12);
+
+      &-icon{
+        width: 32px;
+        font-size: 20px;
+        @extend %page;
+        cursor: pointer;
+        transition: all .3s ease;
+
+        &:hover, &.active{
+          color: #fff;
+          background-color: $primary-color;
+        }
+        &.is-disabled, &.active.is-disabled{
+          @extend %disabled;
+
+          &:hover{
+            @extend %disabled;
+          }
+        }
+      }
+      &-num{
+        flex: 1;
+        text-align: center;
+
+        span{
+          display: inline-block;
+          padding: 0 20px;
+          @extend %page;
+        }
+      }
+    }
+  }
+  &-right{
+    overflow: auto;
+    box-sizing: border-box;
+    position: relative;
+    height: 100%;
+    background: #F1F5F6;
+    padding: 0 15px;
+  }
+}
+
+.app-footer{
+  display: flex;
+  align-items: center;
+  position: relative;
+  background-color: #fff;
+  box-shadow: 0 0 6px 1px rgba(0, 0, 0, .12);
+
+  &-right{
+    flex: 1;
+    text-align: right;
+
+    .amount{
+      display: inline-block;
+      margin-right: 16px;
+      vertical-align: middle;
+
+      .num{
+        margin: 0 0 -6px;
+        font-size: 1.75em;
+      }
+    }
+    .el-button{
+      vertical-align: middle;
+    }
+    .w150{
+      width: 150px;
+    }
+  }
+  .check{
+    margin-left: 52px;
+  }
+}
+
+
+.order-side-list{
+  &.app-side-list{
+    overflow: auto;
+    flex: 1;
+    border-top: 1px solid $bg-color;
+  }
+
+  &-item{
+    padding: 6px 12px;
+    border-bottom: 1px solid $bg-color;
+    cursor: pointer;
+    &.is-active{
+      box-shadow: 0 0 8px rgba(0, 0, 0, .2);
+    }
+
+    .title{
+      margin: 0;
+    }
+    .desc, .amount-text{
+      color: $text3-color;
+      font-size: 12px;
+    }
+    .desc{
+      margin-bottom: 6px;
+    }
+    .amount{
+      color: $blue-color;
+      font-size: 16px;
+    }
+    .status{
+      float: right;
+    }
+  }
+}

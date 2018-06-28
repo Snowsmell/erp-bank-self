@@ -1,0 +1,65 @@
+@import 'var';
+
+/**
+ * 按钮尺寸
+*/
+.el-button--full{
+  display: block;
+  width: 100%;
+}
+
+/**
+ * 发送短信按钮
+ */
+.el-input-group__append .el-button.el-button--sms{
+  color: #fff;
+  background-color: $btn-color;
+  border-color: $btn-color;
+  border-radius: 0 4px 4px 0;
+  &:hover{
+    background-color: $btn-hover-color;
+  }
+  &.is-disabled{
+    background-color: $disabled-bg-color;
+    border-color: $disabled-border-color;
+    color: $disabled-text-color;
+  }
+}
+
+.el-check-radio{
+  .el-radio__inner{
+    border-radius: 2px;
+  }
+
+  .el-radio__label{
+    // display: none;
+  }
+}
+
+.ledgerDialog {
+  .el-dialog__header {
+    border-bottom: 1px solid #f5eeee;
+  }
+  .el-button {
+    width: 150px;
+  }
+  .el-date-editor.el-input {
+    width: 100%;
+  }
+  .title {
+    display: inline-block;
+    color: #a1a1a1;
+    margin: 10px 0;
+  }
+  .imgWrap {
+    width: 200px;
+    height: 200px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+    }
+  }
+}
