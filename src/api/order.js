@@ -1,8 +1,7 @@
 import request from '@/utils/request'
-import HOST from './host'
-const SERVER = `${HOST}/erp-bank-service/api/v1`
-// const SERVER1 = `${HOST}/erp-bank-service-v1.2/api/v1`
-const SERVER1 = `${HOST}/erp-bank-service/api/v1`
+import { apiURL } from './config'
+const SERVER = apiURL('erp-bank-service')
+const SERVER1 = apiURL('erp-bank-service')
 
 /** 供应商
  **********************************************************************/
@@ -639,3 +638,37 @@ export function getVendorCredit(vendorName) {
 }
 
 
+/**
+ * v1.2 应收转让申请审核 列表查询
+ * 
+ * @param {[String]} projectName  项目名称
+ * @param {[String]} vendorName   供应商名称
+ * @param {[String]} orderCode    采购合同单号
+ * @param {[String]} requestCode  付款申请单号
+ * @param {[String]} status       状态
+ * 
+ */
+export function getTransferReviewList(data) {
+  return request({
+    url: `${SERVER1}/transfer/list/`,
+    method: 'get',
+    params: data
+  })
+}
+
+/**
+ * v1.2 应收付款转让审核通过
+ * 
+ * @param {[JSON]} ids  批量通过的项目id
+ * @param {[String]} comment  参数
+ */
+export function getTransferReviewPass(json, comment) {
+  return request({
+    url: `${SERVER1}/transfer/approve/`,
+    method: 'post',
+    params: {
+      json,
+      comment
+    }
+  })
+}

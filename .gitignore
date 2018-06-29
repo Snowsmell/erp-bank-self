@@ -18,6 +18,6 @@ selenium-debug.log
 node_modules/
 dist
 docs
-www
+www/
 src/views/test
 src/api/host.js

@@ -10,3 +10,7 @@ export { default as ProjectInfo } from './project-info'
 export { default as ModifyRecord } from './modify-record'
 export { default as ConfirmPerson } from './confirm-person'
 export { default as ConfirmFile } from './confirm-file'
+
+export { default as ContractFilter } from './contract-filter'
+export { default as ContractProject } from './contract-project'
+export { default as ContractPurchase } from './contract-purchase'

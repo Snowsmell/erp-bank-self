@@ -15,11 +15,15 @@ const SupplierDetail = () => import(/* webpackChunkName: "group-payment" */'@/vi
 const Project = () => import(/* webpackChunkName: "group-payment" */'@/views/payment/project')
 const ProjectDetail = () => import(/* webpackChunkName: "group-payment" */'@/views/payment/project/project-detail')
 const PaymentCheck = () => import(/* webpackChunkName: "group-payment" */'@/views/payment/check/check')
+const ReadOnly = () => import(/* webpackChunkName: "group-payment" */'@/views/payment/check/readonly')
+const PaymentApply = () => import(/* webpackChunkName: "group-payment" */'@/views/payment/check/apply')
+
 
 const Approval = () => import(/* webpackChunkName: "group-approval" */'@/views/approval/initiate')
 
 const TransferApply = () => import(/* webpackChunkName: "group-transfer" */'@/views/transfer/apply')
 const TransferCheck = () => import(/* webpackChunkName: "group-transfer" */'@/views/transfer/check')
+const TransferReview = () => import(/* webpackChunkName: "group-transfer" */'@/views/transfer/review/index')
 
 const Repay = () => import(/* webpackChunkName: "group-repay" */'@/views/repay')
 
@@ -31,6 +35,7 @@ const OrderDetail = () => import(/* webpackChunkName: "group-order" */'@/views/o
 const Parameter = () => import(/* webpackChunkName: "group-parameter" */'@/views/parameter/index')
 
 const DataList = () => import(/* webpackChunkName: "group-dataList" */'@/views/dataList/index')
+
 const Ledger = () => import(/* webpackChunkName: "group-ledger" */'@/views/ledger/index')
 Vue.use(Router)
 
@@ -38,7 +43,7 @@ Vue.use(Router)
  * payment / supplier|project
  * pay/check
  * approval / initiate|check|cc
- * transfer / apply|check
+ * transfer / apply|check | review
  * contract / index
  */
 const router = new Router({
@@ -87,6 +92,14 @@ const router = new Router({
           name: 'PaymentCheck',
           component: PaymentCheck
         }, {
+          path: 'readonly',
+          name: 'PaymentReadOnly',
+          component: ReadOnly
+        }, {
+          path: 'apply',
+          name: 'PaymentApply',
+          component: PaymentApply
+        }, {
           path: 'order',
           redirect: '/'
         }, {
@@ -124,6 +137,10 @@ const router = new Router({
           path: 'check',
           name: 'TransferCheck',
           component: TransferCheck
+        }, {
+          path: 'review',
+          name: 'TransferReview',
+          component: TransferReview
         }
       ]
     }, {

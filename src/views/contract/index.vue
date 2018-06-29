@@ -7,29 +7,24 @@
     <app-header></app-header>
 
     <app-main class="is-full">
-      <el-header>
-        <el-row>
-          <el-col :span="5">
-            <select-type :options="options" ></select-type>
-          </el-col>
-          <el-col :span="6">
-            <search-input></search-input>
-          </el-col>
-          <el-col :span="5" :push="1">
-            <el-button type="primary" @click="handleSearch">搜索</el-button>
-          </el-col>
-        </el-row>
-      </el-header>
+      <contract-filter
+        :type="contractType"
+        @onchange="handleTypeChange"
+        @onsearch="handleSearch"
+        style="margin-bottom: 20px" />
       
-      <el-main class="content">
-        <contract-table :tableData="tableData"></contract-table>
-      </el-main>
+      <contract-table
+        :list="contractList"
+        :type="contractType" />
       
-      <el-footer>
-        <el-row type="flex" justify="end">
-          <table-page :total="Number.parseInt(total)" :pageSize="Number.parseInt(pageSize)"></table-page>
-        </el-row>
-      </el-footer>
+      <el-pagination
+        :current-page="Number.parseInt(currPage)"
+        :page-size="Number.parseInt(pageSize)"
+        :total="Number.parseInt(total)"
+        layout="total, prev, pager, next, jumper"
+        @current-change="handlePageChange"
+        style="text-align:right; margin-top: 20px">
+      </el-pagination>
     </app-main>
 
     <el-footer class="app-footer" height="64px"></el-footer>
@@ -38,23 +33,36 @@
 
 <script>
 import { AppHeader, AppMain } from '@layout/components'
-import { SelectType, SearchInput, ContractTable, TablePage } from './components'
+import { ContractFilter, ContractTable } from './components'
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 import { saveContractImg } from '@/api/contract'
 
 import { getRole } from '@/utils/auth'
 
 export default {
+  name: 'ContractList',
   components: {
     AppHeader, AppMain,
-    SelectType, SearchInput,
-    ContractTable,
-    TablePage
+    ContractFilter,
+    ContractTable
+  },
+  data() {
+    return {
+      pageLoading: false,
+      contractCount: 0,
+      contractType: 1,
+      condition: {
+        page: 1,
+        page_size: 10,
+        project_name: '',
+        project_no: ''
+      }
+    }
   },
   computed: {
     ...mapState({
-      tableData: state => state.contract.contractList,
-      searchInput: state => state.contract.searchContent,
+      contractList: state => state.contract.contractList,
+      currPage: state => state.contract.currentPage,
       isShow: state => state.contract.projectIsShow
     }),
     ...mapGetters({
@@ -67,34 +75,38 @@ export default {
       this.getContractList()
     }
   },
-  data() {
-    return {
-      pageLoading: false,
-      contractData: {},
-      flag: false,
-      options: [{
-        category_code: 'xmht',
-        category_name: '项目合同编号'
-      }, {
-        category_code: 'cght',
-        category_name: '采购合同编号'
-      }]
-    }
-  },
   methods: {
     ...mapMutations({
       payment: 'SET_PAYMENT',
-      currentPage: 'SET_CONTRACT_CURRENTPAGE'
+      currentPage: 'SET_CONTRACT_CURRENTPAGE',
+      searchContent: 'SET_CONTRACT_SEARCH_CONTENT'
     }),
-    ...mapActions(['getContractList', 'getProcurementList']),
-    initData() {
+    ...mapActions(['getContractList', 'getProcurementList', 'getProcurementList']),
+
+    initData(val) {
       this.pageLoading = true
-      this.getContractList()
+      if (this.contractType === 1) {
+        this.getContractList()
+      } else if (this.contractType === 2) {
+        this.getProcurementList()
+      } 
       this.pageLoading = false
     },
-    handleSearch() {
+
+    handleSearch(val) {
       this.currentPage('1')
-      this.getContractList(this.searchInput)
+      this.searchContent(val)
+      this.initData()
+    },
+
+    handlePageChange(val) {
+      this.currentPage(val)
+      this.initData()
+    },
+
+    handleTypeChange(val) {
+      this.contractType = val
+      this.initData()
     }
   },
   mounted() {
@@ -107,7 +119,7 @@ export default {
 .is-full {
   background-color: #fff;
   margin: 20px;
-  padding: 20px 0;
+  padding: 20px;
   overflow: auto;
   .content {
     min-height: 600px;

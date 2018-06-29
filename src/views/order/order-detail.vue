@@ -9,12 +9,12 @@
     </order-material>  
 
     <order-process
-      v-if="isPayment && !isTransfer"
+      v-if="isCheck && !isTransfer"
       :list="requestProcess || [{}]"
       title="审批流程"
       class="mb2" />
     <order-transfer-process
-      v-if="isPayment && !isTransfer"
+      v-if="isCheck && !isTransfer"
       :list="transProcess || [{}]"
       title="审批流程"
       class="mb2" />
@@ -81,7 +81,7 @@ import {
   SET_PAYMENT_APPLICANT
 } from '@/store/mutation-types'
 
-import { mapMutations, mapActions } from 'vuex'
+import { mapMutations, mapActions, mapState } from 'vuex'
 import { fileSuffix } from '@/utils'
 
 export default {
@@ -119,10 +119,15 @@ export default {
       requestProcess: [],
       transProcess: [],
       infoTransport: {},      
-      infoDeliveries: []     
+      infoDeliveries: [],
+      isApply: false,
+      isCheck: false     
     }
   },
   computed: {
+    ...mapState({
+      currentSelect: state => state.common.selectedList
+    }),
     supplierData() {
       const { vendor_name, vendor_code } = this.infoSupplier
       return {
@@ -179,7 +184,8 @@ export default {
       setApplicant: SET_PAYMENT_APPLICANT
     }),
     ...mapActions({
-      newSetCurrentPayment: 'newSetCurrentAmount'
+      newSetCurrentPayment: 'newSetCurrentAmount',
+      resetList: 'setselectlist'
     }),
     // 无付款单
     getOrderData(orderId, vendorCode, projectCode) {
@@ -236,7 +242,7 @@ export default {
 
     // v1.2 从付款单列表进入
     getRequestDetail(payId) {
-      API.getrequestDetail(payId).then(res => {
+      let promise = API.getrequestDetail(payId).then(res => {
         this.setLoading(false)
         this.infoSupplier = res.data.request
         this.requestProcess = res.data.request_process
@@ -246,17 +252,37 @@ export default {
         this.infoTransport = res.data.transport
         this.infoDeliveries = res.data.deliveries
       })
+      return promise
     },
     // v1.2 业务员发起申请进入
-    getDeliveryDetail(deliveryId) {
-      API.newGetDeliveryDetail(deliveryId).then(res => {
-        this.setLoading(false)
+    getDeliveryDetail(deliveryId) {      
+      let promise = API.newGetDeliveryDetail(deliveryId).then(res => {
+        this.setLoading(false)        
         this.infoXmht = res.data.project
         this.infoCght = res.data.order
         this.infoTransport = res.data.transport
         this.infoDeliveries.push(res.data.delivery)      
       })
+      return promise
     },    
+    // v1.2 刷新后重置当前选择提单
+    reset() {      
+      if (this.currentSelect.length === 0) {   
+        let current = {}
+        if (this.isApply === true) {
+          current = {
+            'order_amount': this.infoCght.amount,
+            'delivery_id': this.infoDeliveries[0].id   
+          }          
+        } else if (this.isCheck === true) {
+          current = {
+            'amount': this.infoSupplier.amount,
+            'request_id': this.infoSupplier.id
+          }
+        }
+        this.resetList([current])
+      }
+    },
     /**
      * 第2次请求数据
      * params = {projectCode | payRequestId}
@@ -282,17 +308,22 @@ export default {
         this.isShow = true
         if (payId) {
           console.log('payid' + payId)
-          this.isPayment = true
-          // this.getOrderPayData(payId, vendorCode)
-          this.getRequestDetail(payId)
+          this.isCheck = true
+          this.getRequestDetail(payId).then(res => {
+            this.reset()
+          })
         } else if (orderId) {
-          console.log('order' + orderId)
-          // this.getOrderData(orderId, vendorCode, projectCode)          
+          console.log('order' + orderId).then(res => {
+            this.reset()
+          })        
         } else {
           console.log('delivery' + deliveryId)
-          this.getDeliveryDetail(deliveryId)
+          this.isApply = true
+          this.getDeliveryDetail(deliveryId).then(res => {
+            this.reset()
+          })
         }
-      }
+      }     
       this.setLoading(false)
     }
   },

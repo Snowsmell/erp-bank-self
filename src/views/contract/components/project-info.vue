@@ -64,7 +64,8 @@ export default {
   },
   computed: {
     ...mapState({
-      options: state => state.contract.selectList
+      options: state => state.contract.selectList,
+      setTip: state => state.contract.setTip
     })
   },
   methods: {

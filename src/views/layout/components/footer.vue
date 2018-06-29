@@ -1,14 +1,14 @@
 <template>
   <el-footer class="app-footer" height="64px">
     <slot name="check"></slot>
-    <!-- <div class="check">
-      <el-checkbox v-model="checkeALl">全选</el-checkbox>
-      <span class="info"> | 已选择12项采购合同</span>
-    </div> -->
     <div class="check">
-      <!-- <el-checkbox>全选</el-checkbox> -->
-      <!-- 已经选择 <span style="color:#2EBFDE">{{list.length}}</span> 项 -->
+      <!-- <el-checkbox v-model="checkeALl">全选</el-checkbox> -->
+      <!-- <span class="info"> | 已选择12项采购合同</span> -->
+      <span class="info">已选择 {{ numbers }} 项</span>
     </div>
+    <!-- <div class="check">
+      <el-checkbox>全选</el-checkbox>
+    </div> -->
     <div class="app-footer-right">
       <div class="info amount">
         <p class="blue rmb num">¥ {{amount | formatCurrency}}</p>
@@ -35,7 +35,11 @@ export default {
       type: Number,
       required: true
     },
-    text: String
+    text: String,
+    numbers: {
+      type: Number,
+      default: 0
+    }
   }
 }
 </script>

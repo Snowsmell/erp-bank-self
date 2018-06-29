@@ -57,8 +57,8 @@
 <script>
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 import axios from 'axios'
-import HOST from '@/api/host'
-const SERVER = `${HOST}/erp-contract-service/api/v1`
+import { apiURL } from '@/api/config'
+const SERVER = apiURL('erp-contract-service')
 
 export default {
   computed: {

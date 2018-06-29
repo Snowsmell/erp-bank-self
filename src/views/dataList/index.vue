@@ -16,7 +16,9 @@
       </search-wrap>
     </el-header>
     
-    <el-main class="table-main" style="padding:0">
+    <el-main 
+    class="table-main" 
+    style="padding:0">
       <data-table-transport 
         :tableData="list"
         :nowpage="currentPage"
@@ -41,13 +43,13 @@
     <el-button 
     v-if="roleId === 2 && routeName === 'paymentDataList'"
     type="primary" 
-    @click="payRequest" 
+    @click="handleApprove" 
     :disabled="isDisabled"
     >通过</el-button>    
     <el-button 
     v-if="roleId === 2 && routeName === 'transforDataList'"
     type="primary" 
-    @click="payRequest" 
+    @click="handleApply" 
     :disabled="isDisabled"
     >应收转让申请</el-button>     
   </app-footer>
@@ -55,6 +57,7 @@
 </template>
 
 <script>
+import { postPaymentApprove, postTransfer } from '@/api/order'
 import { AppHeader, AppMain, AppFooter } from '@layout/components'
 import { 
   SearchWrap, 
@@ -101,10 +104,10 @@ export default {
     $route(val, oldval) {
       this.setselectlist([])
       this.switchFunction()       
-      // this.reset = true
-      // this.$nextTick(() => {
-      //   this.reset = false
-      // })
+      this.reset = true
+      this.$nextTick(() => {
+        this.reset = false
+      })
     },
     currentPage(val) {
       this.setselectlist([])
@@ -157,6 +160,54 @@ export default {
           })
         }
       })
+    },
+    handleApprove() {
+      const payId = this.$store.state.common.selectedList.map(v => {
+        return v.request_id
+      })
+      let postData = {
+        ids: payId
+      }      
+      postPaymentApprove(postData).then(res => {
+        if (res.code === 0) {
+          this.$message({
+            type: 'success',
+            message: '操作成功!'
+          })
+          this.$router.push('/refresh')
+        }        
+      }).catch(err => {
+        if (err.response.data.code === 500) {
+          this.$message({
+            message: err.response.data.message,
+            type: 'error'
+          })
+        }        
+      })
+    },
+    handleApply() {   
+      const payId = this.$store.state.common.selectedList.map(v => {
+        return v.request_id
+      })
+      let postData = {
+        ids: payId
+      }      
+      postTransfer(postData).then(res => {
+        if (res.code === 0) {
+          this.$message({
+            type: 'success',
+            message: '操作成功!'
+          })
+          this.$router.push('/refresh')
+        }        
+      }).catch(err => {
+        if (err.response.data.code === 500) {
+          this.$message({
+            message: err.response.data.message,
+            type: 'error'
+          })
+        }        
+      })         
     }
   },
   mounted() {

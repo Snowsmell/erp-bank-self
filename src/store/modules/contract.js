@@ -2,7 +2,6 @@ import Router from '@/router'
 
 import { 
   getContractList, 
-  pageSearchTpl, 
   getProcurementList, 
   getCategorys, 
   backShowImg,
@@ -36,7 +35,9 @@ import {
   SET_CONTRACT_CONFIRM,
   SET_CONTRACT_CONFIRM_INFO,
   SET_CONTRACT_CONFIRM_INFO_INDEX,
-  SET_CONTRACT_CONFIRM_INFO_SHOW
+  SET_CONTRACT_CONFIRM_INFO_SHOW,
+  SET_CURRENT_CONTRACT,
+  SET_CONTRACT_DETAIL
 } from '../mutation-types'
 
 const state = {
@@ -201,17 +202,29 @@ const actions = {
    * 项目合同列表
    */
   async getContractList({ commit }, payload = {}) {
-    const projectIsShow = payload.projectIsShow || state.projectIsShow
     const project_name = payload.searchContent || state.searchContent
+    const page = payload.currentPage || state.currentPage
+    
+    const res = await getContractList({project_name, page})
+    if (res.code === 0) {
+      const data = res.data
+      if (data) {
+        commit(SET_CONTRACT_LIST, data.list)
+        commit(SET_CONTRACT_SIZE, data)
+      } else {
+        commit(SET_CONTRACT_LIST, [])
+      }
+    }
+    return res
+  },
+
+  /**
+   * 采购合同列表
+   */
+  async getProcurementList({ commit }, payload = {}) {
     const project_no = payload.searchContent || state.searchContent
     const page = payload.currentPage || state.currentPage
-    function getList() {
-      if (projectIsShow) {
-        return getContractList({project_name, page})
-      }
-      return getProcurementList({project_no, page})
-    }
-    const res = await getList()
+    const res = await getProcurementList({project_no, page})
     if (res.code === 0) {
       const data = res.data
       if (data) {

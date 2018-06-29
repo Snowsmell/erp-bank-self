@@ -43,6 +43,7 @@ let baseConfig = {
       '@layout': resolve('src/views/layout'),
       '@order': resolve('src/views/order'),
       '@payment': resolve('src/views/payment'),
+      '@dataList': resolve('src/views/dataList'),
       'imgs': resolve('src/images'),
     }
   },

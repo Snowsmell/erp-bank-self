@@ -20,6 +20,7 @@
       :amount="$store.getters.paymentTransferAmount">
       <el-button type="warning" @click="onReject" :disabled="isDisabled">拒绝</el-button>
       <el-button type="primary" @click="onApprove" :disabled="isDisabled">通过</el-button>
+      <!-- <el-button type="primary" @click="onApprove" :disabled="isDisabled">应收转让申请</el-button> -->
     </app-footer>
 
   </el-container>

@@ -16,7 +16,7 @@
           <div class="title">{{item.name}} 
             <span>{{item.status}}</span>
           </div>
-          <div class="description">{{item.message}}</div>
+          <div class="description">{{item.remark}}</div>
           
         </div>
       </el-step>
@@ -95,7 +95,7 @@ export default {
             if (item['role_id'] === current['roleId']) {
               current['name'] = item['user_name']
               current['date'] = item['date']
-              current['remark'] = item['remark']
+              current['remark'] = item['remark'] || '暂无备注'
               item['status']['code'] > 0 ? current['status'] = 'success' : current['status'] = 'error'
             }
           }

@@ -39,10 +39,17 @@ export default {
       setPlacholder: 'SET_CONTRACT_PLACEHOLDER',
       setAscription: 'SET_CONTRACT_ASCRIPTION',
       setTip: 'SET_CONTRACT_TIP',
-      searchContent: 'SET_CONTRACT_SEARCH_CONTENT'
+      searchContent: 'SET_CONTRACT_SEARCH_CONTENT',
+      dialogConfirm: 'SET_CONTRACT_CONFIRM',
+      dialogVisible: 'SET_CONTRACT_DIALOG_VISIBLE'
     }),
     ...mapActions(['getContractList']),
     handleChange(item) {
+      if (item === '1000012' || item === '2000012') {
+        this.$emit('select', '')
+      } else {
+        this.$emit('select', item)
+      }
       this.searchContent(null)
       switch (item) {
         case 'xmht':
@@ -56,6 +63,11 @@ export default {
           this.setAscription('2')
           break
         default:
+          if (item === '1000012' || item === '2000012') {
+            this.dialogVisible(false)
+            this.dialogConfirm(true)
+            this.selected = ''
+          }
           this.isShow(true)
           this.setTip(item)
           break

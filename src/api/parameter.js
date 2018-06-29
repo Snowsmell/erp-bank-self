@@ -1,7 +1,7 @@
 import request from '@/utils/request'
-import HOST from './host'
-const SERVER = `${HOST}/erp-bank-service/api/v1`
-const SERVER1 = `${HOST}/erp-contract-service/api/v1`
+import { apiURL } from './config'
+const SERVER = apiURL('erp-bank-service')
+const SERVER1 = apiURL('erp-contract-service')
 
 /**
  * 查询还款记录 列表
@@ -31,12 +31,13 @@ export function exportData(data) {
 
 /**
  * 超级台账分页列表
- * @param {[JSON]} reqVo  参数
+ * 
+ * @param {[JSON]} reqVo  后台接受参数命名为reqVo 
  */
 export function getTransactionList(data) {
   return request({
     url: `${SERVER1}/transactions/`,
-    method: 'post',
+    method: 'POST',
     data
   })
 }
@@ -52,7 +53,6 @@ export function postTransaction(data) {
     data
   })
 }
-
 /**
  * 删除 transaction
  * 

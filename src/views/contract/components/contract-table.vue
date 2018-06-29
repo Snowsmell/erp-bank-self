@@ -1,6 +1,6 @@
 <template>
   <el-table
-    :data="tableData"
+    :data="list"
     stripe
     style="width: 100%">
     <el-table-column
@@ -9,26 +9,30 @@
       width="180">
     </el-table-column>
 
-    <template v-if="isShow">
+    <template v-if="type === 1">
       <el-table-column
         prop="project_code"
         label="项目编号"
+        key="project_code"
         width="180">
       </el-table-column>
       <el-table-column
         prop="parta"
+        key="parta"
         label="项目合同甲方">
       </el-table-column>
     </template>
 
-    <template v-else>
+    <template v-if="type === 2">
       <el-table-column
         prop="contract_code"
         label="采购合同编号"
+        key="contract_code"
         width="180">
       </el-table-column>
       <el-table-column
         prop="parta"
+        key="parta"
         label="供应商">
       </el-table-column>
     </template>
@@ -62,34 +66,32 @@
       label="操作"
       width="100">
       <template slot-scope="scope">
-        <el-button @click="handleClick(scope.$index, scope.row)" type="text" size="small">编辑</el-button>
+        <!-- <el-button @click="handleClick(scope.$index, scope.row)" type="text" size="small">编辑</el-button> -->
+        <a href="javascript:;" @click="handleEdit(scope.row)">编辑</a>
       </template>
     </el-table-column>
   </el-table>
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+// import { mapState, mapMutations } from 'vuex'
+import { SET_CURRENT_CONTRACT } from '@/store/mutation-types'
 
 export default {
   props: {
-    tableData: {
+    list: {
       type: Array,
       required: true
+    },
+    type: {
+      type: Number,
+      default: 1
     }
   },
-  computed: {
-    ...mapState({
-      isShow: state => state.contract.projectIsShow
-    })
-  },
   methods: {
-    ...mapMutations({
-      getQuery: 'SET_CONTRACT_QUERY'
-    }),
-    handleClick(index, val) {
-      this.getQuery(val)
-      this.$router.push({path: '/contract/detail'})
+    handleEdit(val) {
+      this.$store.commit(SET_CURRENT_CONTRACT, val)
+      this.$router.push({ path: '/contract/detail/', query: { type: this.type } })
     }
   }
 

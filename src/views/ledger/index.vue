@@ -44,7 +44,7 @@
 
 <script>
 import { AppHeader, AppMain } from '@layout/components'
-import { TableList, Search, DialogInfo, DialogInfoShow } from './components'
+import { TableList, Search, TablePage, DialogInfo, DialogInfoShow } from './components'
 import { mapState, mapActions } from 'vuex'
 import { postTransaction, deleteTransaction } from '@/api/parameter'
 

@@ -26,7 +26,7 @@ let menus = [ {
   icon: 'el-icon-edit-outline',
   role: [2, 99]
 }, {
-  link: '/transfer/check',
+  link: '/transfer/review',
   title: '应收转让审核',
   icon: 'el-icon-edit-outline',
   role: [6, 7, 8, 9, 99]
@@ -35,6 +35,11 @@ let menus = [ {
   title: '在线还款',
   icon: 'el-icon-sold-out',
   role: [4, 99]
+}, {
+  link: '/contract/',
+  title: '资料上传',
+  icon: 'el-icon-upload',
+  role: [2]
 }, {
   link: '/parameter/',
   title: '在线还款记录',

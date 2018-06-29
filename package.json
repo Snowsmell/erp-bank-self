@@ -1,17 +1,20 @@
 {
   "name": "erp_bank",
   "version": "1.0.0",
-  "description": "ERP bank project",
-  "author": "liumengqing@cmcaifu.com",
+  "description": "ERP Bank project",
+  "author": "Hwariot FE",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
+    "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js --env._type=dev",
     "start": "npm run dev",
     "unit": "jest --config test/unit/jest.conf.js --coverage",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
-    "build": "node build/build.js",
+    "report": "node build:prod --report",
+    "build:sit": "node build/build.js --env._type=sit",
+    "build:uat": "node build/build.js --env._type=uat",
+    "build:prod": "node build/build.js --env._type=prod",
     "build:bundle": "gulp build:bundle",
     "server": "gulp server"
   },
@@ -90,7 +93,8 @@
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-server": "^2.9.1",
-    "webpack-merge": "^4.1.0"
+    "webpack-merge": "^4.1.0",
+    "yargs": "^11.0.0"
   },
   "engines": {
     "node": ">= 6.0.0",

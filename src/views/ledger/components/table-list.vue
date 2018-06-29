@@ -243,7 +243,6 @@ export default {
   },
   methods: {
     handleEdit(val) {
-      console.log(val)
       this.$emit('handleEdit', val)
     },
     handleDelete($index, row) {

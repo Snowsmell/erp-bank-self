@@ -17,16 +17,11 @@
     <app-footer
       text="金额合计"
       :amount="$store.getters.commonAmount">
-        <el-button 
-          type="warning" 
-          @click="onReject" 
-          :disabled="isDisabled">拒绝
-        </el-button>         
-        <el-button 
-          type="primary" 
-          @click="onApprove"           
-          :disabled="isDisabled">通过
-        </el-button>         
+      <el-button 
+        type="primary" 
+        @click="payRequest" 
+        :disabled="isDisabled">申请付款
+      </el-button>
     </app-footer>
 
   </el-container>
@@ -65,7 +60,7 @@ export default {
       payment: 'SET_PAYMENT',
       status: 'SET_PAYMENT_STATUS'
     }),
-    ...mapActions(['getPaymentList', 'setselectlist']),
+    ...mapActions(['getPaymentList', 'setselectlist', 'launchPayRequest']),
     initData() {
       this.search('paymentCheck')
       this.pageLoading = true
@@ -77,28 +72,14 @@ export default {
       })
       getRole() === 99 ? this.isDisabled = true : this.isDisabled = false
     },
-    handlePayment(type) {
-      const payId = this.$store.state.common.selectedList.map(v => {
-        return v.request_id
-      })
-      let postData = {
-        ids: payId
-      }
-      let promise
-      if (type === 1) {
-        promise = postPaymentApprove(postData)
-      }
-      if (type === 0) {
-        promise = postPaymentReject(postData)
-      }
-      promise.then(res => {
+    payRequest() {
+      this.launchPayRequest().then(res => {
         if (res.code === 0) {
           this.$message({
             type: 'success',
             message: '操作成功!'
           })
-          this.$router.push('/refresh')
-        }
+        } 
       }).catch(err => {
         if (err.response.data.code === 500) {
           this.$message({
@@ -107,29 +88,7 @@ export default {
           })
         }
       })
-      return promise
-    },
-    onApprove() {       
-      this.$confirm('确定通过该付款申请?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.handlePayment(1)
-      }).catch(() => {
-      })
-    },
-    onReject() {
-      this.$confirm('确定拒绝该付款申请?', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        this.handlePayment(0)
-      }).catch(() => {
-        // console.log('取消操作')
-      })
-    }   
+    }    
   },
   mounted() {
     this.initData()

@@ -3,18 +3,19 @@ const concat = require('gulp-concat')
 const connect = require('gulp-connect')
 const proxy = require('http-proxy-middleware')
 
-const PORT = require('./config/port')
+const devConf = require('./config/dev.conf')
+const devProxy = devConf.proxy[0]
 
 gulp.task('server', function () {
   connect.server({
-    name: 'web',
-    host: '0.0.0.0',
+    name: 'test',
+    host: devConf.host,
     root: 'dist',
-    port: PORT.test,
+    port: devConf.port.test,
     livereload: true,
     middleware: function (connect, opt) {
       return [
-        proxy(['/erp-user-service/api/v1', '/erp-bank-service/api/v1', '/zuul/erp-contract-service/api/v1', '/erp-contract-service/api/v1'], {
+        proxy(devProxy.context, {
           target: 'http://47.97.113.0:8080',
           changeOrigin: true
         }),

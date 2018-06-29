@@ -67,7 +67,10 @@ export default {
   computed: {
     ...mapState({
       roleId: state => state.user.roleId
-    })
+    }),
+    routeName() {
+      return this.$route.name
+    }
   },  
   methods: {
     ...mapActions({
@@ -76,7 +79,7 @@ export default {
     dbHandle(val, ev) {
       this.setselectlist([val])
       this.$router.push({
-        path: '/payment/check',
+        path: this.routeName === 'transforDataList' ? '/transfer/apply' : this.roleId === 2 ? '/payment/check' : '/payment/readonly',
         query: {
           payId: val.request_id || val.pay_request_id,
           vendorCode: val.vendor_code

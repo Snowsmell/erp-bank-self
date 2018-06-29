@@ -7,9 +7,9 @@
     :before-close="handleClose">
     <el-row>
       <span>标签：</span>
-      <select-type :options="options"></select-type>
-      <label for="file" class="selectFile">选择上传文件</label>
-      <input type="file" name="file" id="file" value="" accept="image/*, video/*" class="upFile" @change="handleFiles($event)"/>
+      <select-type :options="options" v-on:select="setSelect"></select-type>
+      <label for="file" class="selectFile" >选择上传文件</label>
+      <input type="file" name="file" id="file" value="" accept="image/*, video/*" :disabled="disabled" class="upFile" @change="handleFiles($event)"/>
     </el-row>
   </el-dialog>
 </template>
@@ -20,8 +20,8 @@ import { saveUploadImg } from '@/api/contract'
 import { mapState, mapMutations } from 'vuex'
 
 import axios from 'axios'
-import HOST from '@/api/host'
-const SERVER = `${HOST}/erp-contract-service/api/v1`
+import { apiURL } from '@/api/config'
+const SERVER = apiURL('erp-contract-service')
 
 export default {
   name: 'UploadInfo',
@@ -41,6 +41,12 @@ export default {
       contractType: state => state.contract.contractType
     })
   },
+  data() {
+    return {
+      getSelect: '',
+      disabled: true
+    }
+  },
   methods: {
     ...mapMutations({
       setVisible: 'SET_CONTRACT_DIALOG_VISIBLE',
@@ -51,10 +57,25 @@ export default {
       dialogConfirm: 'SET_CONTRACT_CONFIRM',
       showNull: 'SET_CONTRACT_CONFIRM_INFO_SHOW'
     }),
+    setSelect(val) {
+      console.log(val)
+      this.getSelect = val
+      if (val === '') {
+        this.disabled = true
+        return 
+      }
+      this.disabled = false
+    },
     handleClose(item) {
       this.setVisible(false)
     },
     handleFiles(e) {
+      if (this.getSelect === '') {
+        this.$message({
+          message: '请选择相应的标签，再进行上传',
+          type: 'warning'
+        })
+      }
       let file = e.target.files[0]
       let formData = new FormData()
 

@@ -11,7 +11,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
-const PORT = require('../config/port')
+const devConf = require('../config/dev.conf')
 
 const env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
@@ -146,8 +146,8 @@ if (config.build.productionGzip) {
 if (config.build.bundleAnalyzerReport) {
   const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
   webpackConfig.plugins.push(new BundleAnalyzerPlugin({
-    analyzerHost: '0.0.0.0',
-    analyzerPort: PORT.analy
+    analyzerHost: devConf.host,
+    analyzerPort: devConf.port.analy
   }))
 }
 

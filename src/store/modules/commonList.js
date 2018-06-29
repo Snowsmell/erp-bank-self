@@ -1,5 +1,3 @@
-import { isType } from '@/utils'
-
 import {
   launchPayRequest,
   getRequestList,
@@ -32,6 +30,10 @@ const getters = {
       }      
     })
     return sum
+  },
+  selectAmount: (state) => {
+    let quantity = state.selectedList.length
+    return quantity
   },
   selectedDeliveriesId: (state) => {
     return state.selectedList.map(v => {

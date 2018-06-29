@@ -98,7 +98,7 @@
         </el-col>
 
         <el-col :xs="24" :sm="12" :xl="12">
-          <el-form-item label="商业汇票票号" :label-width="formLabelWidth">
+          <el-form-item label="商业汇票票号" :label-width="formLabelWidth" prop="draft_no">
             <el-input v-model="dialogInfo.draft_no" auto-complete="off"></el-input>
           </el-form-item>
         </el-col>
@@ -266,7 +266,6 @@
 
         <el-col :xs="24" :sm="12" :xl="12">
           <el-form-item label="是否质押放款" :label-width="formLabelWidth">
-            <!-- <el-input v-model="dialogInfo.is_loan" auto-complete="off"></el-input> -->
             <el-switch
               v-model="dialogInfo.is_loan"
               style="margin-right: 8px" />
@@ -276,7 +275,6 @@
 
         <el-col :xs="24" :sm="12" :xl="12">
           <el-form-item label="质押票据是否对应供应商" :label-width="formLabelWidth">
-            <!-- <el-input v-model="dialogInfo.is_link_to_supplier" auto-complete="off"></el-input> -->
             <el-switch
               v-model="dialogInfo.is_link_to_supplier"
               style="margin-right: 8px" />
@@ -309,11 +307,10 @@
         </el-col>
       </el-row>
       
-
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button @click="handleCancel">取 消</el-button>
-      <el-button type="primary" @click="handleUpdate">确 定</el-button>
+      <el-button type="primary" @click="handleUpdate()">确 定</el-button>
     </div>
   </el-dialog>
 </template>

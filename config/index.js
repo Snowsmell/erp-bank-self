@@ -3,7 +3,7 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
-const PORT = require('./port')
+const devConf = require('./dev.conf')
 
 module.exports = {
   dev: {
@@ -11,22 +11,11 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: [{
-      '/api/v1': {
-        target: 'http://api.com',
-        changeOrigin: true
-      }
-    }, {
-      context: ['/erp-user-service/api/v1', '/erp-bank-service/api/v1',  '/erp-bank-service-v1.2/api/v1', '/zuul/erp-contract-service/api/v1', '/erp-contract-service/api/v1'],
-      // target: 'http://47.97.113.0:8080',
-      target: 'http://192.168.6.68:8080',      
-      // target: 'https://erp-bank-api.hwariot.com',
-      changeOrigin: true
-    }],
+    proxyTable: devConf.proxy,
 
     // Various Dev Server settings
-    host: 'localhost', // can be overwritten by process.env.HOST
-    port: PORT.dev, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    host: devConf.host, // can be overwritten by process.env.HOST
+    port: devConf.port.dev, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,

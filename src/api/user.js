@@ -1,7 +1,8 @@
 import request from '@/utils/request'
-import HOST from './host'
-const SERVER = `${HOST}/erp-user-service/api/v1`
-const SERVER1 = `${HOST}/erp-bank-service/api/v1`
+import { apiURL } from './config'
+const SERVER = apiURL('erp-user-service')
+const SERVER1 = apiURL('erp-bank-service')
+
 
 /**
  * 发送短信验证码

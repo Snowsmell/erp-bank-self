@@ -16,7 +16,7 @@
 
     <app-footer
       text="总金额"
-      :amount="$store.getters.paymentAmount">
+      :amount="$store.getters.commonAmount">
       <el-button type="primary" class="w150" @click="onApply" :disabled="isDisabled">应收转让申请</el-button>
     </app-footer>
 
@@ -62,9 +62,11 @@ export default {
       getRole() === 99 ? this.isDisabled = true : this.isDisabled = false
     },
     handleApply() {
-      const payId = Number(this.$store.state.order.orderUrlQuery['payId'])
+      const payId = this.$store.state.common.selectedList.map(v => {
+        return v.request_id
+      })
       let postData = {
-        ids: [payId]
+        ids: payId
       }
       postTransfer(postData).then(res => {
         if (res.code === 0) {
@@ -84,13 +86,6 @@ export default {
       })
     },
     onApply() {
-      if (this.$store.getters.paymentAmount === 0) {
-        this.$alert('请选择相应的申请单', '提示', {
-          confirmButtonText: '确定',
-          type: 'warning'
-        })
-        return
-      }
       this.$confirm('确定要提交该应收转让申请?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',

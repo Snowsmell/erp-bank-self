@@ -1,0 +1,23 @@
+@import '../comm/var';
+
+.view-main {
+  margin: 20px;
+  padding: 20px;
+  background-color: #fff;
+}
+
+.filter {
+  .el-row {
+    margin-bottom: 20px;
+
+    .el-input {
+      width: 60%;
+    }
+    .el-select {
+      width: 100%;  
+    }
+    .el-button {
+      width: 40%;
+    }
+  }
+}

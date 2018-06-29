@@ -82,7 +82,7 @@ export default {
     this.sellerName(null)
     this.debetNo(null)
     this.voucherNo(null)
-    this.time([])
+    // this.time([])
   }
 }
 </script>

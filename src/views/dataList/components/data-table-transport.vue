@@ -11,33 +11,32 @@
 
   <el-table-column type="selection" width="40"></el-table-column>
 
-  <el-table-column type="index" label="编号" width="50"></el-table-column>
 
-  <el-table-column label="项目名称/编号" width="180">
+  <el-table-column label="项目名称/编号" width="190">
     <template slot-scope="scope">
       {{scope.row.project_name}}<br/>{{scope.row.project_code}}
     </template>
   </el-table-column>
 
-  <el-table-column label="供应商/ID" width="180">
+  <el-table-column label="供应商/ID" width="190">
     <template slot-scope="scope">
       {{scope.row.vendor_name}}<br/>{{scope.row.vendor_code}}
     </template>
   </el-table-column>
 
-  <el-table-column prop="project_contract_code" label="采购合同编号" width="180">
+  <el-table-column prop="project_contract_code" label="采购合同编号" width="190">
     <template slot-scope="scope">
       {{scope.row.order_code}}
     </template>
   </el-table-column>
 
-  <el-table-column label="采购合同金额" width="180">
+  <el-table-column label="采购合同金额" width="190">
     <template slot-scope="scope">
       ￥ {{scope.row.order_amount | formatCurrency}}
     </template>
   </el-table-column>
 
-  <el-table-column label="运单编号/收货时间" width="180">
+  <el-table-column label="运单编号/收货时间" width="190">
     <template slot-scope="scope">
       {{scope.row.transport_code}}<br/>{{scope.row.receive_time | formatTime}}
     </template>
@@ -78,7 +77,7 @@ export default {
     dbHandle(val, ev) {
       this.setselectlist([val])
       this.$router.push({
-        path: '/payment/check',
+        path: '/payment/apply',
         query: {
           deliveryId: val.delivery_id,
           vendorCode: val.vendor_code

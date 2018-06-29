@@ -1,4 +1,3 @@
-import Router from '@/router'
 import {
   searchpays,
   exportData,
@@ -79,10 +78,12 @@ const actions = {
 
   async onlinepay({ commit }, reqJson) {
     let res = await searchpays(reqJson)
-    if (res.code === 0 && res.data.list.length > 0) {
-      commit(SET_PARAM_LIST, res.data.list)
+    if (res.code === 0) {
+      if (res.data.list.length > 0) {
+        commit(SET_PARAM_LIST, res.data.list)
+      }
       commit(SET_PARAM_PAGE_SIZE, res.data)
-      commit(SET_PARAM_SEARCH_TIME, [])
+      // commit(SET_PARAM_SEARCH_TIME, [])
     } else {
       commit(SET_PARAM_LIST, [])
       commit(SET_PARAM_SEARCH_TIME, [])
@@ -108,11 +109,17 @@ const actions = {
       document.body.removeChild(elink)
     }
   },
-  async getTransactions({ state, commit }, payload) {
-    const condition = Object.assign({
+
+  /**
+   * 超级台账分页列表 列表
+   * 
+   * @param {[JSON]} 参数
+   * */ 
+  async getTransactions({ commit }, payload) {
+    const reqVo = Object.assign({
       page_size: 10
     }, payload)
-    const res = await getTransactionList(condition)
+    const res = await getTransactionList(reqVo)
     commit(SET_TRANSACTIONS, res.data)
     return res
   }

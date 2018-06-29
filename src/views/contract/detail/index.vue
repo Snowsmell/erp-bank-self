@@ -7,7 +7,14 @@
     <app-header></app-header>
 
     <app-main class="is-full">
-      <contract-info :info="contractInfo" :title="title" class="marginBtn"></contract-info>
+      <contract-project
+        v-if="ascription === '1'"
+        :info="contractInfo"
+        style="margin-bottom: 16px" />
+      <contract-purchase
+        v-if="ascription === '2'"
+        :info="contractInfo"
+        style="margin-bottom: 16px" />
 
       <project-info title="立项资料" class="marginBtn"></project-info>
 
@@ -31,7 +38,7 @@
 
 <script>
 import { AppHeader, AppMain } from '@layout/components'
-import { ContractInfo, ProjectInfo, ModifyRecord, TablePage, ConfirmPerson } from '../components'
+import { ContractInfo, ProjectInfo, ModifyRecord, TablePage, ConfirmPerson, ContractProject, ContractPurchase } from '../components'
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 import { saveSeal } from '@/api/contract'
 import Cookies from 'js-cookie'
@@ -42,7 +49,9 @@ export default {
     ContractInfo, ProjectInfo,
     ModifyRecord,
     TablePage,
-    ConfirmPerson
+    ConfirmPerson,
+    ContractProject,
+    ContractPurchase
   },
   computed: {
     ...mapState({

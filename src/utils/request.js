@@ -32,7 +32,6 @@ Service.interceptors.response.use(response => {
      * code: 512 未登录，请先登录
      * code: 502 未授权
      */
-    console.log(res.code)
     if (res.code === 502 || res.code === 512) {
       Store.dispatch('Logout').then(() => {
         window.location.href = '/'
