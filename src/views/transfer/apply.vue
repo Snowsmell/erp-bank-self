@@ -4,7 +4,7 @@
     v-loading="pageLoading"
     element-loading-background="rgba(255, 255, 255, 0.92)"
     element-loading-text="正在加载数据...">
-    <app-header></app-header>
+    <!-- <app-header></app-header> -->
 
     <app-main class="is-full">
       <order-left/>
@@ -19,7 +19,6 @@
       :amount="$store.getters.commonAmount">
       <el-button type="primary" class="w150" @click="onApply" :disabled="isDisabled">应收转让申请</el-button>
     </app-footer>
-
   </el-container>
 </template>
 

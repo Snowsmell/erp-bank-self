@@ -5,12 +5,12 @@ const roleId = getRole() || 1
 
 
 let menus = [ {
-  link: '/payment',
+  link: '/payment/',
   title: '付款申请',
   icon: 'el-icon-menu',
   role: [1]
 }, {
-  link: '/payment/dataList',
+  link: '/payment/review',
   title: '付款申请审核',
   icon: 'el-icon-menu',
   role: [2, 3, 4, 5, 99]
@@ -21,7 +21,7 @@ let menus = [ {
   role: [1]
   // role: [1, 2, 3, 4, 5]
 }, {
-  link: '/transfer/dataList',
+  link: '/transfer/request',
   title: '应收转让申请',
   icon: 'el-icon-edit-outline',
   role: [2, 99]
@@ -88,8 +88,8 @@ export function generateMenu(roleId) {
 
 export function getHomeLink(roleId) {
   const link = {
-    1: '/payment/dataList',
-    2: '/payment/dataList',
+    1: '/payment/',
+    2: '/payment/',
     3: '/payment/check',
     4: '/payment/check',
     5: '/payment/check',
@@ -99,5 +99,5 @@ export function getHomeLink(roleId) {
     9: '/transfer/check', 
     99: '/payment/check'
   }
-  return link[roleId] || '/payment/dataList'
+  return link[roleId] || '/payment/'
 }

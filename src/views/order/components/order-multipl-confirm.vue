@@ -1,12 +1,14 @@
 <template>
   <!-- 多人确权 -->
-  <div class="order-multilp-confirm" style="margin:20px 0;color:#333;font-size:14px;padding:20px;background:#fff">
-    <div>{{title}}</div>
-    <hr>
+  <text-card>
+    <div v-if="title" class="left" slot="header">
+      <span class="title">{{title}}</span>
+    </div>
+    
     <template v-if="qqData.code">
-      <div class="person" style="border-bottom:1px solid #333;padding-bottom:20px;margin-bottom:20px;overflow:hidden">
+      <div class="person" style="border-bottom:1px solid #ebeef5;padding-bottom:20px;margin-bottom:20px;overflow:hidden">
         <p>确权人</p>
-        <ul v-if="qqData.registered_faces.length>0">
+        <ul v-if="qqData.registered_faces.length>0" style="list-style:none">
           <template v-for="(item, index) in qqData.registered_faces" >
           <li :key="'person-'+index">        
             <media-item
@@ -88,22 +90,21 @@
       <multipl-list :info="qqData"/>
 
     </el-dialog>
-  
-  </div>
-
-
+  </text-card>
 </template>
 
 <script>
 import MediaItem from './order-media-item'
 import MultiplList from './order-multipl-list'
 import { fileSuffix } from '@/utils'
+import TextCard from '@/components/TextCard'
 
 export default {
   name: 'OrderMultipl',
   components: {
     MediaItem,
-    MultiplList
+    MultiplList,
+    TextCard
   },
   props: {
     confirmData: {

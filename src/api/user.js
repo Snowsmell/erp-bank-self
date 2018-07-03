@@ -1,7 +1,8 @@
 import request from '@/utils/request'
 import { apiURL } from './config'
 const SERVER = apiURL('erp-user-service')
-const SERVER1 = apiURL('erp-bank-service')
+const SERVER1 = apiURL('erp-bank-service-v1.2')
+const SERVER2 = apiURL('erp-bank-service')
 
 
 /**
@@ -51,7 +52,7 @@ export function logout() {
  */
 export function getMonthRequested() {
   return request({
-    url: `${SERVER1}/system/requested/month/`,
+    url: `${SERVER2}/system/requested/month/`,
     method: 'get'
   })
 }
@@ -61,7 +62,7 @@ export function getMonthRequested() {
  */
 export function getDayRequested() {
   return request({
-    url: `${SERVER1}/system/requested/day/`,
+    url: `${SERVER2}/system/requested/day/`,
     method: 'get'
   })
 }

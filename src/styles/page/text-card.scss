@@ -65,10 +65,11 @@
     }
     .el-row{
       padding: 0 20px;
+      line-height: 45px;
       box-sizing: border-box;
       margin: 0 !important;
       &:nth-of-type(2n){
-        background-color: #F9F9F9;
+        background-color: rgba(251, 251, 251, 1);
       }
     }
   }

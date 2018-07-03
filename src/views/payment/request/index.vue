@@ -7,9 +7,9 @@
     <app-header></app-header>
 
     <app-main class="view-main">
-      <repay-filter 
+      <request-filter 
         @changeFilter="handleFilter"/>
-    
+
       <data-table-transport 
         :tableData="list" />
 
@@ -24,7 +24,7 @@
     </app-main>
 
     <app-footer :numbers="quantity" :amount="amount">
-      <el-button type="primary" @click="handlePass">在线还款</el-button>
+      <el-button type="primary" @click="handlePass">申请付款</el-button>
     </app-footer>
   </el-container>
 </template>
@@ -32,14 +32,14 @@
 <script>
 import { AppHeader, AppFooter, AppMain } from '@layout/components'
 import { DataTableTransport } from '@dataList/components'
-import { RepayFilter } from './components'
-import { RepaymentList, postPaymentApprove } from '@/api/order'
+import { RequestFilter } from './components'
+import { getTransportList, launchPayRequest } from '@/api/order'
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
 export default {
   components: {
     AppHeader, AppFooter, AppMain,
-    DataTableTransport, RepayFilter
+    DataTableTransport, RequestFilter
   },
   data() {
     return {
@@ -56,16 +56,16 @@ export default {
     ...mapGetters({
       amount: 'commonAmount',
       quantity: 'selectAmount',
-      requestId: 'selectedRequestId'
+      deliveries: 'selectedDeliveriesId'
     })
   },
   methods: {
     ...mapMutations({
-      setList: 'SET_SELECT_LIST'
+      setselectlist: 'SET_SELECT_LIST'
     }),
     initData() {
-      let obj = Object.assign({status: 1}, this.param, {page: this.page})
-      RepaymentList(obj).then(res => {
+      let obj = Object.assign({status: 0}, this.param, {page: this.page})
+      getTransportList(obj).then(res => {
         if (res.code === 0) {
           this.list = res.data.results
           this.total = res.data.count
@@ -86,18 +86,24 @@ export default {
       this.initData()
     },
     handlePass() {
-      console.log('通过所选择的选项')
-      let json = {
-        ids: this.requestId
+      console.log(this.deliveries)
+      let payRequestJson = {
+        deliveries: this.deliveries
       }
-      postPaymentApprove(json).then(res => {
-        console.log(res)
+      launchPayRequest(payRequestJson).then(res => {
+        if (res.code === 0) {
+          this.$message({
+            message: '恭喜您，申请付款成功',
+            type: 'success'
+          })    
+        }
+        this.$router.push('/refresh')
       })
     }
   },
   mounted() {
     this.initData()
-    this.setList([])
+    this.setselectlist([])
   }
 }
 </script>

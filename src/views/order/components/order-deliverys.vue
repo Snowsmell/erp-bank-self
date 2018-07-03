@@ -9,7 +9,7 @@
         </div>
       </div>
       <order-material :list="item.details || []" title="物资清单" :key="'wzqd-'+index"/>
-      <order-confirm :confirmData="item" :title="'收货确权资料'" :key="'qqzl'+index"/>      
+      <order-confirm :confirmData="item" :title="'提货确权资料'" :key="'qqzl'+index"/>      
     </template>
   </div>
 
@@ -34,21 +34,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .name{
+.info {
+  line-height: 45px;
+
+  .name {
     color:#333;
     font-weight: 600;
     font-size: 16px;
     padding: 10px 20px;
     border-bottom: 1px solid #ccc;
-    .text{
+    .text {
       font-weight: 400;
       color:#999;
       font-size: 14px;      
       padding: 0 10px;
     }
   }
-  .date{
+  .date {
     background: #FBFBFB;
     padding: 10px 20px;    
   }
+}
+  
 </style>

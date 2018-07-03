@@ -1,8 +1,8 @@
 import request from '@/utils/request'
-import HOST from './host'
-const SERVER = `${HOST}/erp-bank-service/api/v1`
-const SERVER1 = `${HOST}/erp-contract-service/api/v1`
-const SERVER2 = `${HOST}/api/v1`
+import { apiURL } from './config'
+const SERVER = apiURL('erp-bank-service')
+const SERVER1 = apiURL('erp-contract-service')
+
 
 /** 用印项目合同
  **********************************************************************/

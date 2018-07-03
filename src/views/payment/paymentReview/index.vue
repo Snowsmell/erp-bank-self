@@ -7,10 +7,10 @@
     <app-header></app-header>
 
     <app-main class="view-main">
-      <repay-filter 
+      <review-filter 
         @changeFilter="handleFilter"/>
-    
-      <data-table-transport 
+
+      <data-table 
         :tableData="list" />
 
       <el-pagination
@@ -24,22 +24,22 @@
     </app-main>
 
     <app-footer :numbers="quantity" :amount="amount">
-      <el-button type="primary" @click="handlePass">在线还款</el-button>
+      <el-button type="primary" @click="handlePass">通过</el-button>
     </app-footer>
   </el-container>
 </template>
 
 <script>
 import { AppHeader, AppFooter, AppMain } from '@layout/components'
-import { DataTableTransport } from '@dataList/components'
-import { RepayFilter } from './components'
-import { RepaymentList, postPaymentApprove } from '@/api/order'
+import { DataTable } from '@dataList/components'
+import { ReviewFilter } from './components'
+import { getRequestList, postPaymentApprove } from '@/api/order'
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
 export default {
   components: {
     AppHeader, AppFooter, AppMain,
-    DataTableTransport, RepayFilter
+    DataTable, ReviewFilter
   },
   data() {
     return {
@@ -65,7 +65,7 @@ export default {
     }),
     initData() {
       let obj = Object.assign({status: 1}, this.param, {page: this.page})
-      RepaymentList(obj).then(res => {
+      getRequestList(obj).then(res => {
         if (res.code === 0) {
           this.list = res.data.results
           this.total = res.data.count

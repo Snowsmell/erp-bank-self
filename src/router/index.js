@@ -7,9 +7,12 @@ import BreadCrumb from './bread-crumb'
 const Home = () => import(/* webpackChunkName: "group-common" */'@/views/home')
 const Login = () => import(/* webpackChunkName: "group-common" */'@/views/login')
 const Layout = () => import(/* webpackChunkName: "group-common" */'@/views/layout')
+const DetailLayout = () => import(/* webpackChunkName: "group-common" */'@/views/detailLayout')
 
 const Refresh = () => import('@/views/handle/refresh')
 
+const Request = () => import(/* webpackChunkName: "group-payment" */'@/views/payment/request/index')
+const PaymentReview = () => import(/* webpackChunkName: "group-payment" */'@/views/payment/paymentReview/index')
 const Supplier = () => import(/* webpackChunkName: "group-payment" */'@/views/payment/supplier')
 const SupplierDetail = () => import(/* webpackChunkName: "group-payment" */'@/views/payment/supplier/supplier-detail')
 const Project = () => import(/* webpackChunkName: "group-payment" */'@/views/payment/project')
@@ -19,11 +22,12 @@ const ReadOnly = () => import(/* webpackChunkName: "group-payment" */'@/views/pa
 const PaymentApply = () => import(/* webpackChunkName: "group-payment" */'@/views/payment/check/apply')
 
 
-const Approval = () => import(/* webpackChunkName: "group-approval" */'@/views/approval/initiate')
+const Approval = () => import(/* webpackChunkName: "group-approval" */'@/views/approval/initiate/index')
 
 const TransferApply = () => import(/* webpackChunkName: "group-transfer" */'@/views/transfer/apply')
 const TransferCheck = () => import(/* webpackChunkName: "group-transfer" */'@/views/transfer/check')
 const TransferReview = () => import(/* webpackChunkName: "group-transfer" */'@/views/transfer/review/index')
+const TransferRequest = () => import(/* webpackChunkName: "group-transfer" */'@/views/transfer/request/index')
 
 const Repay = () => import(/* webpackChunkName: "group-repay" */'@/views/repay')
 
@@ -62,14 +66,42 @@ const router = new Router({
       name: 'Refresh',
       component: Refresh
     }, {
-      path: '/payment',
-      component: Layout,
-      redirect: '/payment/dataList',
+      path: '/detailLayout/',
+      component: DetailLayout,
+      redirect: '/detailLayout/apply',
       children: [
         {
-          path: 'dataList',
-          name: 'paymentDataList',
-          component: DataList
+          path: 'apply',
+          name: 'PaymentApply',
+          component: PaymentApply
+        }, {
+          path: 'readonly',
+          name: 'PaymentReadOnly',
+          component: ReadOnly
+        }, {
+          path: 'check',
+          name: 'PaymentCheck',
+          component: PaymentCheck
+        }, {
+          path: 'transferApply',
+          name: 'TransferApply',
+          component: TransferApply
+        }
+      ]
+    }, {
+      path: '/payment',
+      component: Layout,
+      redirect: '/payment/request',
+      children: [
+        {
+          path: 'request',
+          name: 'paymentRequest',
+          component: Request
+        },
+        {
+          path: 'review',
+          name: 'PaymentReview',
+          component: PaymentReview
         },
         {
           path: 'supplier',
@@ -87,19 +119,23 @@ const router = new Router({
           path: 'project/detail',
           name: 'ProjectDetail',
           component: ProjectDetail
-        }, {
-          path: 'check',
-          name: 'PaymentCheck',
-          component: PaymentCheck
-        }, {
-          path: 'readonly',
-          name: 'PaymentReadOnly',
-          component: ReadOnly
-        }, {
-          path: 'apply',
-          name: 'PaymentApply',
-          component: PaymentApply
-        }, {
+        }, 
+        // {
+        //   path: 'check',
+        //   name: 'PaymentCheck',
+        //   component: PaymentCheck
+        // }, 
+        // {
+        //   path: 'readonly',
+        //   name: 'PaymentReadOnly',
+        //   component: ReadOnly
+        // }, 
+        // {
+        //   path: 'apply',
+        //   name: 'PaymentApply',
+        //   component: DetailLayout
+        // }, 
+        {
           path: 'order',
           redirect: '/'
         }, {
@@ -111,29 +147,30 @@ const router = new Router({
     }, {
       path: '/approval',
       component: Layout,
-      redirect: '/approval/dataList',
+      redirect: '/approval/',
       children: [
         {
-          path: 'dataList',
-          name: 'approvalDataList',
-          component: DataList
+          path: '/',
+          name: 'Approval',
+          component: Approval
         }
       ]
     }, {
       path: '/transfer',
       component: Layout,
-      redirect: '/transfer/dataList',
+      redirect: '/transfer/request',
       children: [
         {
-          path: 'dataList',
-          name: 'transforDataList',
-          component: DataList
+          path: 'request',
+          name: 'transferRequest',
+          component: TransferRequest
         },        
+        // {
+        //   path: 'apply',
+        //   name: 'TransferApply',
+        //   component: TransferApply
+        // }, 
         {
-          path: 'apply',
-          name: 'TransferApply',
-          component: TransferApply
-        }, {
           path: 'check',
           name: 'TransferCheck',
           component: TransferCheck

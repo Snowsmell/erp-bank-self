@@ -42,7 +42,15 @@
   position: relative; z-index: 10;
   background-color: #121245;
   box-shadow: 0 1px 4px rgba(0,21,41,.08);
-
+  
+  &-title {
+    float: left;
+    min-width: 134px;
+    height: 64px;
+    line-height: 64px;
+    font-size: 16px;
+    color: #fff;
+  }
   &-right{
     float: right;
     width: 10%;min-width: 134px;
@@ -52,7 +60,6 @@
   &-left {
     float: left;
     width: 60%;
-    // padding-left: 10%;
     height: 64px;
     line-height: 64px;
     text-align: center;

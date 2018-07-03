@@ -62,7 +62,8 @@
 </el-table>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapMutations } from 'vuex'
+
 export default {
   props: {
     tableData: {
@@ -71,21 +72,14 @@ export default {
     }
   },  
   methods: {
-    ...mapActions({
-      setselectlist: 'setselectlist'}
-    ),
+    ...mapMutations({
+      setselectlist: 'SET_SELECT_LIST'
+    }),
     dbHandle(val, ev) {
       this.setselectlist([val])
-      this.$router.push({
-        path: '/payment/apply',
-        query: {
-          deliveryId: val.delivery_id,
-          vendorCode: val.vendor_code
-        }
-      })
+      window.open(window.location.origin + '#' + '/detailLayout/apply?deliveryId=' + val.delivery_id + '&vendorCode=' + val.vendor_code)
     },
     handleSelect(selection) {
-      console.log(selection)
       this.setselectlist(selection)
     },
     handleSelectAll(selection) {

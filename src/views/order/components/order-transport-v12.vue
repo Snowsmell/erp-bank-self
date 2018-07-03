@@ -30,6 +30,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.info {
+  line-height: 45px;
+  
   .name{
     color:#333;
     font-weight: 600;
@@ -47,4 +50,6 @@ export default {
     background: #FBFBFB;
     padding: 10px 20px;    
   }
+}
+  
 </style>

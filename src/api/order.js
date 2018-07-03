@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 import { apiURL } from './config'
 const SERVER = apiURL('erp-bank-service')
-const SERVER1 = apiURL('erp-bank-service')
+const SERVER1 = apiURL('erp-bank-service-v1.2')
 
 /** 供应商
  **********************************************************************/
@@ -275,18 +275,7 @@ export function getDeliveryDetail(deliveryId) {
   })
 }
 
-/**
- * 运单列表
- * 
- * @param {[Object]} params 运单 {[orderId | payRequestId]}
- */
-export function getTransportList(params) {
-  return request({
-    url: `${SERVER}/transport/list/`,
-    method: 'get',
-    params
-  })
-}
+
 
 /**
  * 运单详情
@@ -454,18 +443,7 @@ export function postPaymentRetrail(data) {
   })
 }
 
-/**
- * 申请付款单 审批通过 ✅
- * 
- * @param {[Object]} data 
- */
-export function postPaymentApprove(data) {
-  return request({
-    url: `${SERVER}/payrequest/approve/`,
-    method: 'post',
-    data
-  })
-}
+
 
 /**
  * 申请付款单 审批拒绝 ❌
@@ -480,18 +458,7 @@ export function postPaymentReject(data) {
   })
 }
 
-/**
- * 应收付款转让申请 ⬆️
- * 
- * @param {[Object]} data 
- */
-export function postTransfer(data) {
-  return request({
-    url: `${SERVER}/payrequest/transfer/`,
-    method: 'post',
-    data
-  })
-}
+
 
 /**
  * 应收付款转让 审批通过 ✅
@@ -523,13 +490,28 @@ export function postTransferReject(data) {
  **********************************************************************/
 
 /**
+ * 申请付款列表
+ * 
+ * @param {[Object]} data 运单 {[orderId | payRequestId]}
+ * @param {[Number]} page 页数
+ */
+export function getTransportList(data) {
+  return request({
+    url: `${SERVER}/transport/lists/`,
+    method: 'get',
+    params: data
+  })
+}
+
+
+/**
  * v1.2 申请付款 ❌
  * 
  * @param {[JSON]} data JSON数据
  */
 export function launchPayRequest(data) {
   return request({
-    url: `${SERVER1}/request/pay/`,
+    url: `${SERVER}/request/pay/`,
     method: 'post',
     data
   })
@@ -543,7 +525,7 @@ export function launchPayRequest(data) {
  */
 export function getRequestList(data) {
   return request({
-    url: `${SERVER1}/request/list/`,
+    url: `${SERVER}/request/list/`,
     method: 'get',
     params: data
   })
@@ -556,7 +538,7 @@ export function getRequestList(data) {
  */
 export function getrequestDetail(requestId) {
   return request({
-    url: `${SERVER1}/request/details/`,
+    url: `${SERVER}/request/details/`,
     method: 'get',
     params: {
       requestId
@@ -572,7 +554,7 @@ export function getrequestDetail(requestId) {
  */
 export function getPayLaunchList(data) {
   return request({
-    url: `${SERVER1}/transport/lists/`,
+    url: `${SERVER}/transport/lists/`,
     method: 'get',
     params: data
   })
@@ -585,7 +567,7 @@ export function getPayLaunchList(data) {
  */
 export function getRequestedList(data) {
   return request({
-    url: `${SERVER1}/payrequest/requested/list/`,
+    url: `${SERVER}/payrequest/requested/list/`,
     method: 'get',
     params: data
   })
@@ -598,7 +580,7 @@ export function getRequestedList(data) {
  */
 export function newGetDeliveryDetail(deliveryId) {
   return request({
-    url: `${SERVER1}/transport/details/`,
+    url: `${SERVER}/transport/details/`,
     method: 'get',
     params: {
       deliveryId
@@ -613,7 +595,7 @@ export function newGetDeliveryDetail(deliveryId) {
  */
 export function newGetTransportDetail(transportId) {
   return request({
-    url: `${SERVER1}/transport/details/`,
+    url: `${SERVER}/transport/details/`,
     method: 'get',
     params: {
       transportId
@@ -629,7 +611,7 @@ export function newGetTransportDetail(transportId) {
  */
 export function getVendorCredit(vendorName) {
   return request({
-    url: `${SERVER1}/vendors/info/credit/`,
+    url: `${SERVER}/vendors/info/credit/`,
     method: 'get',
     params: {
       vendorName
@@ -650,7 +632,7 @@ export function getVendorCredit(vendorName) {
  */
 export function getTransferReviewList(data) {
   return request({
-    url: `${SERVER1}/transfer/list/`,
+    url: `${SERVER}/transfer/list/`,
     method: 'get',
     params: data
   })
@@ -664,11 +646,55 @@ export function getTransferReviewList(data) {
  */
 export function getTransferReviewPass(json, comment) {
   return request({
-    url: `${SERVER1}/transfer/approve/`,
+    url: `${SERVER}/transfer/approve/`,
     method: 'post',
     params: {
       json,
       comment
     }
+  })
+}
+
+/**
+ * v1.2 应收付款转让申请 ⬆️
+ * 
+ * @param {[JSON]} data 单子id数组
+ * @param {[String]} comments 参数
+ */
+export function postTransfer(data, comments) {
+  return request({
+    url: `${SERVER}/payrequest/transfer/`,
+    method: 'post',
+    params: {
+      data,
+      comments
+    }
+  })
+}
+
+/**
+ * v1.2 申请付款单 审批通过 ✅
+ * 
+ * @param {[JSON]} json 付款单id数组
+ */
+export function postPaymentApprove(data) {
+  return request({
+    url: `${SERVER}/payrequest/approve/`,
+    method: 'post',
+    data
+  })
+}
+
+
+/**
+ * v1.2 在线还款 列表 ✅
+ * 
+ * @param {[JSON]} data 在线还款参数
+ */
+export function RepaymentList(data) {
+  return request({
+    url: `${SERVER}/repayment/list/`,
+    method: 'get',
+    params: data
   })
 }

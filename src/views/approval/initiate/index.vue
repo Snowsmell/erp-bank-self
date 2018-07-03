@@ -7,10 +7,10 @@
     <app-header></app-header>
 
     <app-main class="view-main">
-      <repay-filter 
+      <initiate-filter 
         @changeFilter="handleFilter"/>
-    
-      <data-table-transport 
+
+      <data-table 
         :tableData="list" />
 
       <el-pagination
@@ -23,23 +23,21 @@
       </el-pagination>
     </app-main>
 
-    <app-footer :numbers="quantity" :amount="amount">
-      <el-button type="primary" @click="handlePass">在线还款</el-button>
-    </app-footer>
+    <el-footer class="app-footer" height="64px"></el-footer>
   </el-container>
 </template>
 
 <script>
-import { AppHeader, AppFooter, AppMain } from '@layout/components'
-import { DataTableTransport } from '@dataList/components'
-import { RepayFilter } from './components'
-import { RepaymentList, postPaymentApprove } from '@/api/order'
+import { AppHeader, AppMain } from '@layout/components'
+import { DataTable } from '@dataList/components'
+import { InitiateFilter } from './components'
+import { getRequestedList, launchPayRequest } from '@/api/order'
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
 export default {
   components: {
-    AppHeader, AppFooter, AppMain,
-    DataTableTransport, RepayFilter
+    AppHeader, AppMain,
+    DataTable, InitiateFilter
   },
   data() {
     return {
@@ -52,20 +50,13 @@ export default {
       param: {}
     }
   },
-  computed: {
-    ...mapGetters({
-      amount: 'commonAmount',
-      quantity: 'selectAmount',
-      requestId: 'selectedRequestId'
-    })
-  },
   methods: {
     ...mapMutations({
-      setList: 'SET_SELECT_LIST'
+      setselectlist: 'SET_SELECT_LIST'
     }),
     initData() {
       let obj = Object.assign({status: 1}, this.param, {page: this.page})
-      RepaymentList(obj).then(res => {
+      getRequestedList(obj).then(res => {
         if (res.code === 0) {
           this.list = res.data.results
           this.total = res.data.count
@@ -84,20 +75,11 @@ export default {
       this.page = 1
       this.currPage = 1
       this.initData()
-    },
-    handlePass() {
-      console.log('通过所选择的选项')
-      let json = {
-        ids: this.requestId
-      }
-      postPaymentApprove(json).then(res => {
-        console.log(res)
-      })
     }
   },
   mounted() {
     this.initData()
-    this.setList([])
+    this.setselectlist([])
   }
 }
 </script>

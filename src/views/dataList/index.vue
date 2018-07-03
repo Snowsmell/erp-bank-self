@@ -31,9 +31,9 @@
     </el-footer>
   </app-main>
   
-  <app-footer :amount="amount" v-if="routeName !== 'approvalDataList'">
-    <div class="check" style="float:left;margin-left:0;line-height:40px">已经选择 <span style="color:#2EBFDE">{{selectList.length}}</span> 项
-    </div>
+  <app-footer :amount="amount" :numbers="quantity" v-if="routeName !== 'approvalDataList'">
+    <!-- <div class="check" style="float:left;margin-left:0;line-height:40px">已经选择 <span style="color:#2EBFDE">{{selectList.length}}</span> 项
+    </div> -->
     <el-button 
     v-if="roleId === 1 && routeName === 'paymentDataList'"
     type="primary" 
@@ -91,7 +91,8 @@ export default {
       roleId: state => state.user.roleId
     }),
     ...mapGetters({
-      amount: 'commonAmount'
+      amount: 'commonAmount',
+      quantity: 'selectAmount'
     }),
     routeName() {
       return this.$route.name
@@ -127,7 +128,8 @@ export default {
       'getPayLaunchList',
       'getRequestedList', 
       'setselectlist',
-      'launchPayRequest']),
+      'launchPayRequest'
+    ]),
 
     switchFunction(data) {    
       data = Object.assign({}, { page: this.currentPage })

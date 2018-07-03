@@ -33,7 +33,7 @@ export default {
   props: {
     amount: {
       type: Number,
-      required: true
+      default: 0
     },
     text: String,
     numbers: {

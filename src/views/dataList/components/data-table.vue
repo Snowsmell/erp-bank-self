@@ -4,6 +4,7 @@
   @row-dblclick="dbHandle"
   @select="handleSelect"
   @select-all="handleSelectAll"
+  stripe
   style="width: 100%"
   class="dataTable">
 
@@ -74,17 +75,13 @@ export default {
   },  
   methods: {
     ...mapActions({
-      setselectlist: 'setselectlist'}
-    ),
+      setselectlist: 'setselectlist'
+    }),
     dbHandle(val, ev) {
       this.setselectlist([val])
-      this.$router.push({
-        path: this.routeName === 'transforDataList' ? '/transfer/apply' : this.roleId === 2 ? '/payment/check' : '/payment/readonly',
-        query: {
-          payId: val.request_id || val.pay_request_id,
-          vendorCode: val.vendor_code
-        }
-      })
+      let pathName = this.routeName === 'transforDataList' ? '/detailLayout/transferApply' : this.roleId === 2 ? '/detailLayout/check' : '/detailLayout/readonly'
+      let payId = val.request_id || val.pay_request_id
+      window.open(window.location.origin + '#' + pathName + '?payId=' + payId + '&vendorCode=' + val.vendor_code)
     },
     handleSelect(selection) {
       this.setselectlist(selection)

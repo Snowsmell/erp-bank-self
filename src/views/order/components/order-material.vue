@@ -6,6 +6,7 @@
     </div>
     <el-table
       :data="list"
+      :summary-method="getSummaries"
       show-summary
       style="width: 100%">
       <el-table-column
@@ -45,9 +46,9 @@
       <el-table-column
         prop="amount"
         label="含税总金额 (元)">
-        <!-- <template slot-scope="scope">
-          {{scope.row.amount}}
-        </template> -->
+        <template slot-scope="scope">
+          ¥ {{scope.row.amount | formatCurrency}}
+        </template>
       </el-table-column>
     </el-table>
 
@@ -56,7 +57,7 @@
 
 <script>
 import TextCard from '@/components/TextCard'
-
+import { formatCurrency } from '@/filters'
 export default {
   components: {
     TextCard
@@ -67,6 +68,39 @@ export default {
       required: true
     },
     title: String
+  },
+  data() {
+    return {
+      tableFoot: {
+
+      }
+    }
+  },
+  methods: {
+    getSummaries(param) {
+      const { columns, data } = param
+      const sums = []
+      columns.forEach((v, i, arr) => {
+        const values = data.map(item => Number(item[v.property]))
+        if (i === 0) {
+          sums[i] = '合计'
+        }         
+        if (!values.every(value => isNaN(value))) {
+          sums[i] = values.reduce((prev, curr) => {
+            const value = Number(curr)
+            if (!isNaN(value)) {
+              return prev + curr
+            } else {
+              return prev
+            }
+          }, 0)
+        }
+        if (i === arr.length - 1) {
+          sums[i] = '¥ ' + formatCurrency(sums[i])
+        }
+      })
+      return sums
+    }
   }
 }
 </script>

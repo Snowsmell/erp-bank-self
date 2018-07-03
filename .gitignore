@@ -20,4 +20,3 @@ dist
 docs
 www/
 src/views/test
-src/api/host.js

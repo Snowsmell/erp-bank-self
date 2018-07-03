@@ -47,7 +47,6 @@
       v-if="infoDeliveries"
     />
     
-  
   </div>
   <div v-else class="no-data"><span>无数据</span></div>
 </template>
@@ -307,17 +306,12 @@ export default {
       if (vendorCode && (orderId || payId || deliveryId)) {
         this.isShow = true
         if (payId) {
-          console.log('payid' + payId)
           this.isCheck = true
           this.getRequestDetail(payId).then(res => {
             this.reset()
           })
-        } else if (orderId) {
-          console.log('order' + orderId).then(res => {
-            this.reset()
-          })        
+        } else if (orderId) {     
         } else {
-          console.log('delivery' + deliveryId)
           this.isApply = true
           this.getDeliveryDetail(deliveryId).then(res => {
             this.reset()

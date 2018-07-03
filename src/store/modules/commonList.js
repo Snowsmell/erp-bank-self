@@ -39,6 +39,11 @@ const getters = {
     return state.selectedList.map(v => {
       return v.delivery_id
     })
+  },
+  selectedRequestId: (state) => {
+    return state.selectedList.map(item => {
+      return item.request_id
+    })
   }
 }
 
@@ -47,6 +52,7 @@ const mutations = {
     state.dataList = list.results
     state.total = list.count
   },
+  // v1.2通用列表页，设置选中的内容
   [SET_SELECT_LIST](state, list) {
     state.selectedList = list.slice()
   },
@@ -89,7 +95,7 @@ const actions = {
     }
   },
   // v1.2通用列表页，设置选中的内容
-  setselectlist({commit, state}, list = []) {
+  setselectlist({commit}, list = []) {
     commit(SET_SELECT_LIST, list)
   }
 
